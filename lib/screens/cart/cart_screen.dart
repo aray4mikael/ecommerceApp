@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertestux/widgets/widgets.dart';
 
+import '../../models/cart_model.dart';
 import '../../models/product_model.dart';
 import '../../widgets/cart_product_cart.dart';
 
@@ -29,7 +30,7 @@ class CartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                  style:  ElevatedButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                     elevation: 0,
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -61,7 +62,7 @@ class CartScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Add \$20.0 for FREE Delivery',
+                      '${Cart().freeDeliveryString}',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -90,9 +91,15 @@ class CartScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10),
-                CartProductCard(product: Product.products[0]),
-                CartProductCard(product: Product.products[1]),
-                CartProductCard(product: Product.products[2]),
+                SizedBox(
+                  height: 400,
+                  child: ListView.builder(
+                    itemCount: Cart().products.length,
+                    itemBuilder: (context, index) {
+                      return CartProductCard(product: Cart().products[index]);
+                    },
+                  ),
+                ),
               ],
             ),
             Column(
@@ -114,7 +121,7 @@ class CartScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Avenir'),
                           ),
-                          Text('\$5.98',
+                          Text('\$${Cart().subtotalString}',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -134,7 +141,7 @@ class CartScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Avenir'),
                           ),
-                          Text('\$5.98',
+                          Text('\$${Cart().deliveryFeeString}',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -174,7 +181,7 @@ class CartScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Avenir'),
                             ),
-                            Text('\$12.90',
+                            Text('\$${Cart().totalString}',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
