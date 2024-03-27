@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertestux/widgets/widgets.dart';
 
+import '../../blocs/cart/cart_bloc.dart';
+import '../../blocs/cart/cart_state.dart';
 import '../../models/cart_model.dart';
 import '../../models/product_model.dart';
 import '../../widgets/cart_product_cart.dart';
@@ -9,7 +12,7 @@ import '../../widgets/cart_product_cart.dart';
 class CartScreen extends StatelessWidget {
   static const String routeName = '/cart';
 
-  const CartScreen({super.key});
+  const CartScreen({Key? key}) : super(key: key);
 
   static Route route() {
     return MaterialPageRoute(
@@ -30,44 +33,52 @@ class CartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  onPressed: () {},
-                  child: Text(
-                    'GO TO CHECKOUT',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Avenir'),
-                  ))
+                ),
+                onPressed: () {},
+                child: Text(
+                  'GO TO CHECKOUT',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Avenir',
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+        if (state is CartLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is CartLoaded) {
+          return Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${Cart().freeDeliveryString}',
+                      '${state.cart.freeDeliveryString}',
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Avenir'),
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Avenir',
+                      ),
                     ),
                     ElevatedButton(
                         onPressed: () {
@@ -91,24 +102,20 @@ class CartScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10),
-                SizedBox(
-                  height: 400,
+                Expanded(
                   child: ListView.builder(
-                    itemCount: Cart().products.length,
+                    itemCount: state.cart.products.length,
                     itemBuilder: (context, index) {
-                      return CartProductCard(product: Cart().products[index]);
+                      return CartProductCard(product: state.cart.products[index]);
                     },
                   ),
                 ),
-              ],
-            ),
-            Column(
-              children: [
                 Divider(thickness: 2),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40.0, vertical: 10.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,17 +123,21 @@ class CartScreen extends StatelessWidget {
                           Text(
                             'SUBTOTAL',
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Avenir'),
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Avenir',
+                            ),
                           ),
-                          Text('\$${Cart().subtotalString}',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: 'Avenir')),
+                          Text(
+                            '\$${state.cart.subtotalString}',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: 'Avenir',
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 10),
@@ -136,68 +147,66 @@ class CartScreen extends StatelessWidget {
                           Text(
                             'DELIVERY FEE',
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Avenir'),
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Avenir',
+                            ),
                           ),
-                          Text('\$${Cart().deliveryFeeString}',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: 'Avenir')),
+                          Text(
+                            '\$${state.cart.deliveryFeeString}',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: 'Avenir',
+                            ),
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                Stack(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withAlpha(50),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.all(5.0),
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'TOTAL',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Avenir'),
-                            ),
-                            Text('\$${Cart().totalString}',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                    fontFamily: 'Avenir')),
-                          ],
+                Container(
+                  margin: const EdgeInsets.all(5.0),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'TOTAL',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Avenir',
+                          ),
                         ),
-                      ),
+                        Text(
+                          '\$${state.cart.totalString}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Avenir',
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          );
+        } else {
+          return Text('Something went wrong');
+        }
+      }),
     );
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertestux/blocs/cart/cart_event.dart';
 
+import '../blocs/cart/cart_bloc.dart';
+import '../blocs/cart/cart_state.dart';
 import '../blocs/wishlist/wishlist_bloc.dart';
 import '../models/product_model.dart';
 
@@ -89,13 +92,41 @@ class ProductCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+                      if (state is CartLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state is CartLoaded) {
+                        return Expanded(
+                            child: IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            context
+                                .read<CartBloc>()
+                                .add(CartProductAdded(product));
+                          },
+                        ));
+                      } else {
+                        return Text('Something went wrong.');
+                      }
+                    }),
                     isWishListed
                         ? Expanded(
                             child: IconButton(
                                 onPressed: () {
-                                  context.read<WishlistBloc>().add(RemoveWishlistProduct(product));
-                                  final snackBar = SnackBar(content: Text('Removed to your Wishlist'));
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  context
+                                      .read<WishlistBloc>()
+                                      .add(RemoveWishlistProduct(product));
+                                  final snackBar = SnackBar(
+                                      content:
+                                          Text('Removed to your Wishlist'));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(
                                   Icons.delete,

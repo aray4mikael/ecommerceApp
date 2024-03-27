@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertestux/blocs/cart/cart_bloc.dart';
+import 'package:fluttertestux/blocs/cart/cart_event.dart';
 
+import '../blocs/cart/cart_state.dart';
 import '../models/product_model.dart';
 
 class CartProductCard extends StatelessWidget {
@@ -46,20 +50,28 @@ class CartProductCard extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Row(
-            children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.remove_circle)),
-              Text(
-                '1',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    fontFamily: 'Avenir'),
-              ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.add_circle)),
-            ],
-          )
+          BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+            return Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      context.read<CartBloc>().add(CartProductRemoved(product));
+                    },
+                    icon: Icon(Icons.remove_circle)),
+                Text(
+                  '1',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'Avenir'),
+                ),
+                IconButton(onPressed: () {
+                  context.read<CartBloc>().add(CartProductAdded(product));
+                }, icon: Icon(Icons.add_circle)),
+              ],
+            );
+          })
         ],
       ),
     );

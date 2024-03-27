@@ -1,9 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertestux/blocs/cart/cart_event.dart';
 import 'package:fluttertestux/blocs/wishlist/wishlist_bloc.dart';
 import 'package:fluttertestux/models/models.dart';
 import 'package:fluttertestux/widgets/widgets.dart';
+
+import '../../blocs/cart/cart_bloc.dart';
+import '../../blocs/cart/cart_state.dart';
 
 class ProductScreen extends StatelessWidget {
   static const String routeName = '/product';
@@ -46,19 +50,26 @@ class ProductScreen extends StatelessWidget {
                     Icons.favorite,
                     color: Colors.white,
                   )),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    'ADD TO CART',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Avenir'),
-                  ))
+              BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          context.read<CartBloc>().add(CartProductAdded(product));
+                          Navigator.pushNamed(context, '/cart');
+                        },
+                        child: Text(
+                          'ADD TO CART',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Avenir'),
+                        ));
+                  }
+              )
             ],
           ),
         ),
