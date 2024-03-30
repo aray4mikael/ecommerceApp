@@ -17,5 +17,5 @@ class UpdateCategories extends CategoryEvent {
   UpdateCategories(this.categories);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [categories];
 }

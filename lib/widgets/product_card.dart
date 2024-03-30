@@ -76,10 +76,13 @@ class ProductCard extends StatelessWidget {
                           Text(
                             product.name,
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Avenir'),
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Avenir',
+                            ),
+                            maxLines: 1, // Limita o texto a uma linha
+                            overflow: TextOverflow.ellipsis, // Adiciona reticências se o texto ultrapassar o espaço
                           ),
                           Text(
                             '${product.price}',

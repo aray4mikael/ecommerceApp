@@ -55,6 +55,8 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.debug
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -63,4 +65,8 @@ flutter {
     source '../..'
 }
 
-dependencies {implementation 'com.android.support:multidex:1.0.3'}
+dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
+}
+
+

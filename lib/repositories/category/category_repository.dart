@@ -19,5 +19,4 @@ class CategoryRepository extends BaseCategoryRepository {
       return snapshot.docs.map((doc) => Category.fromSnapshot(doc)).toList();
     });
   }
-
 }

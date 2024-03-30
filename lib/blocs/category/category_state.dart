@@ -19,3 +19,12 @@ class CategoryLoaded extends CategoryState {
   @override
   List<Object> get props => [categories];
 }
+
+class CategoryError extends CategoryState {
+  final String message;
+
+  CategoryError({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

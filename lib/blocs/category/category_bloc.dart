@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:fluttertestux/blocs/category/category_event.dart';
 import 'package:fluttertestux/blocs/category/category_state.dart';
+import 'package:fluttertestux/models/category_model.dart';
 import 'package:fluttertestux/repositories/category/category_repository.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
@@ -11,30 +12,31 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   CategoryBloc({required CategoryRepository categoryRepository})
       : _categoryRepository = categoryRepository,
-        super(CategoryLoading());
+        super(CategoryLoading()) {
+    on<LoadCategories>(_mapLoadCategoriesToState);
+  }
 
   @override
-  Stream<CategoryState> mapEventToState(
-    CategoryEvent event,
-  ) async* {
-    if (event is LoadCategories) {
-      yield* _mapLoadCategoriesToState();
-    }
+  Stream<CategoryState> mapEventToState(CategoryEvent event) async* {
     if (event is UpdateCategories) {
       yield* _mapUpdateCategoriesToState(event);
     }
   }
 
-  Stream<CategoryState> _mapLoadCategoriesToState() async* {
-    _categorySubscription?.cancel();
-    _categorySubscription = _categoryRepository
-        .getAllCategories()
-        .listen((categories) => add(UpdateCategories(categories)));
+  void _mapLoadCategoriesToState(LoadCategories event, Emitter<CategoryState> emit) async {
+    try {
+      emit(CategoryLoading()); // Emitir o estado de carregamento enquanto busca as categorias
+      final categoriesStream = _categoryRepository.getAllCategories();
+      final categories = await categoriesStream.first; // Obter a primeira lista de categorias da stream
+      emit(CategoryLoaded(categories: categories)); // Emitir o estado CategoryLoaded com a lista de categorias
+    } catch (e) {
+      emit(CategoryError(message: 'Failed to load categories: $e'));
+    }
   }
+
 
   Stream<CategoryState> _mapUpdateCategoriesToState(
       UpdateCategories event) async* {
     yield CategoryLoaded(categories: event.categories);
   }
-
 }
