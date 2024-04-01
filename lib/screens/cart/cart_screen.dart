@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertestux/widgets/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/cart/cart_bloc.dart';
 import '../../blocs/cart/cart_state.dart';
 import '../../models/cart_model.dart';
 import '../../models/product_model.dart';
 import '../../widgets/cart_product_cart.dart';
+import '../../widgets/order_summary.dart';
 
 class CartScreen extends StatelessWidget {
   static const String routeName = '/cart';
@@ -40,15 +42,16 @@ class CartScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/checkout');
+                },
                 child: Text(
                   'GO TO CHECKOUT',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Avenir',
-                  ),
+                  style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -73,12 +76,11 @@ class CartScreen extends StatelessWidget {
                   children: [
                     Text(
                       '${state.cart.freeDeliveryString}',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Avenir',
-                      ),
+                      style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal)),
                     ),
                     ElevatedButton(
                         onPressed: () {
@@ -93,116 +95,36 @@ class CartScreen extends StatelessWidget {
                         ),
                         child: Text(
                           'Add More itens',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Avenir'),
+                          style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold)),
                         ))
                   ],
                 ),
                 SizedBox(height: 10),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: state.cart.productQuantity(state.cart.products).keys.length,
+                    itemCount: state.cart
+                        .productQuantity(state.cart.products)
+                        .keys
+                        .length,
                     itemBuilder: (context, index) {
                       return CartProductCard(
-                          product: state.cart.productQuantity(state.cart.products).keys.elementAt(index),
-                          quantity: state.cart.productQuantity(state.cart.products).values.elementAt(index),
+                        product: state.cart
+                            .productQuantity(state.cart.products)
+                            .keys
+                            .elementAt(index),
+                        quantity: state.cart
+                            .productQuantity(state.cart.products)
+                            .values
+                            .elementAt(index),
                       );
                     },
                   ),
                 ),
-                Divider(thickness: 2),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'SUBTOTAL',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Avenir',
-                            ),
-                          ),
-                          Text(
-                            '\$${state.cart.subtotalString}',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: 'Avenir',
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'DELIVERY FEE',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Avenir',
-                            ),
-                          ),
-                          Text(
-                            '\$${state.cart.deliveryFeeString}',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: 'Avenir',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(5.0),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'TOTAL',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Avenir',
-                          ),
-                        ),
-                        Text(
-                          '\$${state.cart.totalString}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: 'Avenir',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                OrderSummary(),
               ],
             ),
           );

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
   const CustomAppBar({
     super.key,
     required this.title,
-});
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +19,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text(
           title,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Avenir'
-        ),
+          style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
         ),
       ),
       centerTitle: true,
@@ -42,8 +41,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
     );
   }
 
-
   @override
   Size get preferredSize => Size.fromHeight(50.0);
 }
-

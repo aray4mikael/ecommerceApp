@@ -5,6 +5,7 @@ import 'package:fluttertestux/blocs/cart/cart_event.dart';
 import 'package:fluttertestux/blocs/wishlist/wishlist_bloc.dart';
 import 'package:fluttertestux/models/models.dart';
 import 'package:fluttertestux/widgets/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/cart/cart_bloc.dart';
 import '../../blocs/cart/cart_state.dart';
@@ -62,11 +63,10 @@ class ProductScreen extends StatelessWidget {
                         },
                         child: Text(
                           'ADD TO CART',
-                          style: TextStyle(
+                          style: GoogleFonts.montserrat(textStyle: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Avenir'),
+                              fontWeight: FontWeight.bold)),
                         ));
                   }
               )
@@ -74,6 +74,13 @@ class ProductScreen extends StatelessWidget {
           ),
         ),
       ),
+
+
+
+
+
+
+
       body: ListView(
         children: [
           CarouselSlider(
@@ -111,19 +118,17 @@ class ProductScreen extends StatelessWidget {
                       children: [
                         Text(
                           product.name,
-                          style: TextStyle(
+                          style: GoogleFonts.montserrat(textStyle: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Avenir'),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
                         ),
                         Text(
                           '${product.price}',
-                          style: TextStyle(
+                          style: GoogleFonts.montserrat(textStyle: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Avenir'),
+                              fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),
@@ -138,21 +143,19 @@ class ProductScreen extends StatelessWidget {
               initiallyExpanded: true,
               title: Text(
                 'Product Information',
-                style: TextStyle(
+                style: GoogleFonts.montserrat(textStyle: TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Avenir'),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold)),
               ),
               children: [
                 ListTile(
                   title: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec elementum lorem, rutrum vulputate massa. Donec id lorem sit amet magna suscipit pretium ut a.',
-                    style: TextStyle(
+                    style: GoogleFonts.montserrat(textStyle: TextStyle(
                         color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Avenir'),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold)),
                   ),
                 )
               ],
@@ -163,21 +166,19 @@ class ProductScreen extends StatelessWidget {
             child: ExpansionTile(
               title: Text(
                 'Delivery Information',
-                style: TextStyle(
+                style: GoogleFonts.montserrat(textStyle: TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Avenir'),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold)),
               ),
               children: [
                 ListTile(
                   title: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec elementum lorem, rutrum vulputate massa. Donec id lorem sit amet magna suscipit pretium ut a.',
-                    style: TextStyle(
+                    style: GoogleFonts.montserrat(textStyle: TextStyle(
                         color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Avenir'),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold)),
                   ),
                 )
               ],

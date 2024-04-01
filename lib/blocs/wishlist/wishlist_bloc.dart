@@ -27,8 +27,10 @@ class WishlistState {
 class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   WishlistBloc() : super(WishlistState([])) {
     on<AddWishlistProduct>((event, emit) {
-      final List<Product> updatedWishlist = List.from(state.wishlist)..add(event.product);
-      emit(WishlistState(updatedWishlist));
+      if (!state.wishlist.contains(event.product)) {
+        final List<Product> updatedWishlist = List.from(state.wishlist)..add(event.product);
+        emit(WishlistState(updatedWishlist));
+      }
     });
 
     on<RemoveWishlistProduct>((event, emit) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertestux/blocs/cart/cart_event.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../blocs/cart/cart_bloc.dart';
 import '../blocs/cart/cart_state.dart';
@@ -75,22 +76,20 @@ class ProductCard extends StatelessWidget {
                         children: [
                           Text(
                             product.name,
-                            style: TextStyle(
+                            style: GoogleFonts.montserrat(textStyle: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Avenir',
-                            ),
+                            )),
                             maxLines: 1, // Limita o texto a uma linha
                             overflow: TextOverflow.ellipsis, // Adiciona reticências se o texto ultrapassar o espaço
                           ),
                           Text(
                             '${product.price}',
-                            style: TextStyle(
+                            style: GoogleFonts.montserrat(textStyle: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Avenir'),
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),
@@ -112,6 +111,11 @@ class ProductCard extends StatelessWidget {
                             context
                                 .read<CartBloc>()
                                 .add(CartProductAdded(product));
+                            final snackBar = SnackBar(
+                                content:
+                                Text('Product added to cart'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           },
                         ));
                       } else {

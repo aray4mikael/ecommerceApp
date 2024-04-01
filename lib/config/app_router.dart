@@ -3,6 +3,7 @@ import 'package:fluttertestux/models/models.dart';
 import 'package:fluttertestux/screens/product/product_screen.dart';
 import 'package:fluttertestux/screens/wishlist/wishlist_screen.dart';
 import '../models/category_model.dart';
+import '../screens/checkout/checkout_screen.dart';
 import '../screens/screens.dart';
 
 class AppRouter {
@@ -24,6 +25,8 @@ class AppRouter {
         return WishlistScreen.route();
       case ProductScreen.routeName:
         return ProductScreen.route(product: settings.arguments as Product);
+      case CheckoutScreen.routeName:
+        return CheckoutScreen.route();
 
       default:
         return _errorRoute();

@@ -45,7 +45,7 @@ class Cart extends Equatable {
     }
     else {
       double missing = 30.0 - subtotal;
-      return 'Add \$${missing.toStringAsFixed(2)} for Free Delivery';
+      return 'Add R\$${missing.toStringAsFixed(2)} for Free Delivery';
     }
   }
 

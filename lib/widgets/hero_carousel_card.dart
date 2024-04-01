@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../models/category_model.dart';
 import '../models/product_model.dart';
@@ -52,11 +53,10 @@ class HeroCarouselCard extends StatelessWidget {
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                   child: Text(
                     product == null ? category!.name : "",
-                    style: TextStyle(
+                    style: GoogleFonts.montserrat(textStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Avenir'),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold)),
                   ),
                 ),
               ),

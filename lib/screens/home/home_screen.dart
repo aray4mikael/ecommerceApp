@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                 return Text('Something Went wrong');
               },
             ),
-            SectionTitle(title: 'RECOMMENDED'),
+            SectionTitle(title: 'RECOMENDADOS'),
             BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
               if (state is ProductLoading) {
                 return Center(
@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                 return Text('Something went wrong');
               }
             }),
-            SectionTitle(title: 'MOST POPULAR'),
+            SectionTitle(title: 'POPULARES'),
             BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
               if (state is ProductLoading) {
                 return Center(
