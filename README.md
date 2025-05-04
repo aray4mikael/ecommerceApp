@@ -1,17 +1,60 @@
-# fluttertestux
+# E-commerce App
 
-A new Flutter project.
+Um aplicativo de e-commerce desenvolvido em Flutter, utilizando arquitetura limpa e padrões modernos de desenvolvimento.
 
-## Getting Started
+## 🚀 Tecnologias Utilizadas
 
-This project is a starting point for a Flutter application.
+- Flutter
+- Firebase (Firestore)
+- BLoC Pattern
+- Carousel Slider
+- Google Fonts
+- Equatable
 
-A few resources to get you started if this is your first Flutter project:
+## 📱 Funcionalidades
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Interface moderna e responsiva
+- Carrossel de produtos
+- Integração com Firebase (Firestore)
+- Gerenciamento de estado com BLoC
+- Design system personalizado
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# ecommerceApp
+## 🛠️ Estrutura do Projeto
+
+```
+lib/
+├── blocs/         # Gerenciamento de estado
+├── config/        # Configurações do app
+├── models/        # Modelos de dados
+├── repositories/  # Repositórios de dados
+├── screens/       # Telas do aplicativo
+└── widgets/       # Componentes reutilizáveis
+```
+
+## ⚙️ Configuração do Ambiente
+
+1. Certifique-se de ter o Flutter instalado em sua máquina
+2. Clone este repositório
+3. Execute `flutter pub get` para instalar as dependências
+4. Configure o Firebase (Firestore) com suas credenciais
+5. Execute `flutter run` para iniciar o aplicativo
+
+## 📦 Dependências Principais
+
+- flutter_bloc: ^8.1.4
+- firebase_core: ^2.27.2
+- cloud_firestore: ^4.15.10
+- carousel_slider: ^4.2.1
+- google_fonts: ^6.2.1
+
+## 🔒 Segurança
+
+Este projeto foi configurado para uso público, com as integrações do Firebase desativadas por segurança. Para utilizar as funcionalidades completas, será necessário configurar um novo projeto Firebase e atualizar as credenciais.
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
